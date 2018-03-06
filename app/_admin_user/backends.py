@@ -1,4 +1,4 @@
-from apps.admin_user.modelss import UserModel
+from .models import UserModel
 import logging
  
  
