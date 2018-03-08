@@ -21,11 +21,13 @@ class UserModel(AbstractBaseUser):
     email = models.EmailField(_('email'), 
                                 max_length= 128, unique= True, 
                                 null= False, blank= False)
-    _is_staff = models.BooleanField(default= False)
-    _is_active = models.BooleanField(default= True)
-    _is_admin = models.BooleanField(default= False)
-    
+    is_staff = models.BooleanField(default= False)
+    is_active = models.BooleanField(default= True)
+    is_admin = models.BooleanField(default= False)
 
+    first_name = models.CharField(max_length= 256, blank= True)
+    last_name = models.CharField(max_length= 256, blank= True)
+    
 
     objects = MyUserManager()
 
@@ -42,31 +44,17 @@ class UserModel(AbstractBaseUser):
         return self.email
 
     def get_full_name(self):
-        return self.email
+        return "{0} {1}".format(self.first_name, self.last_name).capitalize()
 
     def get_short_name(self):
-        return self.email
+        first_name = self.first_name[0] if self.first_name else ''
+        return "{0}{1}".format(first_name, self.last_name).lower()
 
 
     # this methods are require to login super user from admin panel
     def has_perm(self, perm, obj= None):
-        return self._is_staff
+        return self.is_staff
 
     # this methods are require to login super user from admin panel
     def has_module_perms(self, app_label):
-        return self._is_staff
-
-    @property
-    def is_staff(self):
-        # "Is the user a member of staff?"
-        return self._is_staff
-
-    @property
-    def is_admin(self):
-        # "Is the user a admin member?"
-        return self._is_admin
-
-    @property
-    def is_active(self):
-        # "Is the user active?"
-        return self._is_active
+        return self.is_staff
