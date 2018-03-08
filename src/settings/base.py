@@ -29,9 +29,14 @@ SECRET_KEY = 'vc-c_9wv(=3l+lp!01lxi*m9@!i^q=fgwsk8^-mm*iivw%0bew'
 
 # Application definition
 
+
+# soberay@bk.ru
+# smtp.mail.ru
+# 2525
+# vrtyh5HgRhTHC56575h4%8ERGC$
+
 INSTALLED_APPS = [
     'djamin', # <- third party
-    'admin_user', # <- custom
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -42,7 +47,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_swagger',
     # Custom
+    'admin_user',
     
+
 ]
 
 MIDDLEWARE = [
@@ -127,6 +134,6 @@ REST_FRAMEWORK = {
 }
 
 AUTH_USER_MODEL = 'admin_user.UserModel'
-AUTHENTICATION_BACKENDS = ('admin_user.MyAuthBackend', 'django.contrib.auth.backends.ModelBackend',)
+# AUTHENTICATION_BACKENDS = ('admin_user.MyAuthBackend', 'django.contrib.auth.backends.ModelBackend',)
 
 
