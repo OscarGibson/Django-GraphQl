@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_swagger',
     # Custom
-    'admin_user',
+    'custom_user',
+    'app.profile',
     
 
 ]
@@ -133,7 +134,7 @@ REST_FRAMEWORK = {
     ]
 }
 
-AUTH_USER_MODEL = 'admin_user.UserModel'
-# AUTHENTICATION_BACKENDS = ('admin_user.MyAuthBackend', 'django.contrib.auth.backends.ModelBackend',)
+AUTH_USER_MODEL = 'custom_user.CustomUserModel'
+# AUTHENTICATION_BіACKENDS = ('custom_user.CustomAuthBackend', 'django.contrib.auth.backends.ModelBackend',)
 
 

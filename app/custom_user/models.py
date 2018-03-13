@@ -1,8 +1,8 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.utils.translation import gettext_lazy as _
 
-class MyUserManager(BaseUserManager):
+class CustomUserManager(BaseUserManager):
     use_in_migrations = True
     
     # python manage.py createsuperuser
@@ -15,7 +15,7 @@ class MyUserManager(BaseUserManager):
         user.save(using= self._db)
         return user
 
-class UserModel(AbstractBaseUser):
+class CustomUserModel(AbstractBaseUser, PermissionsMixin):
     
     sys_id = models.AutoField(primary_key= True, blank= True)        
     email = models.EmailField(_('email'), 
@@ -24,12 +24,17 @@ class UserModel(AbstractBaseUser):
     is_staff = models.BooleanField(default= False)
     is_active = models.BooleanField(default= True)
     is_admin = models.BooleanField(default= False)
+    is_superuser = models.BooleanField(default= False)
 
     first_name = models.CharField(max_length= 256, blank= True)
     last_name = models.CharField(max_length= 256, blank= True)
+
+    created_at = models.DateTimeField(auto_now= True)
+    modified_at = models.DateTimeField(editable= True)
+    last_login = models.DateTimeField()
     
 
-    objects = MyUserManager()
+    objects = CustomUserManager()
 
     USERNAME_FIELD = "email"
     # REQUIRED_FIELDS must contain all required fields on your User model, 
@@ -37,8 +42,8 @@ class UserModel(AbstractBaseUser):
     REQUIRED_FIELDS = ['is_staff']
 
     class Meta:
-        app_label = "admin_user"
-        db_table = "users"
+        app_label = "custom_user"
+        db_table = "custom_users"
 
     def __str__(self):
         return self.email
@@ -49,6 +54,10 @@ class UserModel(AbstractBaseUser):
     def get_short_name(self):
         first_name = self.first_name[0] if self.first_name else ''
         return "{0}{1}".format(first_name, self.last_name).lower()
+
+    @property
+    def username(self):
+        return self.get_short_name()
 
 
     # this methods are require to login super user from admin panel
