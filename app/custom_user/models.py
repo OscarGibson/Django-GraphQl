@@ -49,7 +49,7 @@ class CustomUserModel(AbstractBaseUser, PermissionsMixin):
         return self.email
 
     def get_full_name(self):
-        return "{0} {1}".format(self.first_name, self.last_name).capitalize()
+        return "{0} {1}".format(self.first_name.capitalize(), self.last_name.capitalize())
 
     def get_short_name(self):
         first_name = self.first_name[0] if self.first_name else ''
@@ -58,6 +58,10 @@ class CustomUserModel(AbstractBaseUser, PermissionsMixin):
     @property
     def username(self):
         return self.get_short_name()
+
+    @property
+    def full_name(self):
+        return self.get_full_name()
 
 
     # this methods are require to login super user from admin panel
