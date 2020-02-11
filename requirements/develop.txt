@@ -3,7 +3,7 @@ chardet==3.0.4
 coreapi==2.3.3
 coreschema==0.0.4
 -e git://github.com/hersonls/djamin.git@5b5887c84341065844ab44b6cfc8ccb865ccfdb9#egg=djamin
-Django==2.0.2
+Django==2.2.10
 django-environ==0.4.4
 django-filter==1.1.0
 django-rest-swagger==2.1.2
